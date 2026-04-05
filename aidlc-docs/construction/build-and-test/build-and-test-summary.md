@@ -42,11 +42,19 @@ book-summary-agent 12345  # exit code 1
 | 依存関係 | ✅ 最小限 (5クレート) |
 | コード量 | ✅ 156行 (単一ファイル) |
 
+## CI/CD ワークフロー
+
+| ワークフロー | トリガー | 内容 |
+|------------|---------|------|
+| `ci.yml` | PR / main push | fmt, clippy, test |
+| `release.yml` | v* タグ / 手動 | 5プラットフォームバイナリ + GitHub Release |
+
 ## Construction Phase 完了確認
 
 | ステージ | 成果物 | 状態 |
 |---------|--------|------|
-| Functional Design | business-logic-model.md, business-rules.md, domain-entities.md | ✅ |
+| Functional Design | business-logic-model.md, business-rules.md, domain-entities.md, cicd-design.md | ✅ |
 | NFR Requirements | nfr-requirements.md, tech-stack-decisions.md | ✅ |
 | Code Generation | code-summary.md, code-generation-plan.md | ✅ |
 | Build and Test | build-instructions.md, unit-test-instructions.md, integration-test-instructions.md | ✅ |
+| CI/CD | .github/workflows/ci.yml, release.yml | ✅ |

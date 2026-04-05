@@ -50,6 +50,46 @@
 - Web検索結果の品質はClaudeの判断に依存する
 - オフライン環境では動作しない
 
+### FR-05: CI（継続的インテグレーション）
+- プルリクエストおよび `main` ブランチへのpushで自動実行
+- フォーマットチェック（`cargo fmt --check`）
+- Lintチェック（`cargo clippy -- -D warnings`）
+- テスト実行（`cargo test`）
+
+### FR-06: リリースバイナリ配布
+- `v*` タグのpushまたは手動トリガーでマルチプラットフォームバイナリをビルド
+- 対象プラットフォーム: Linux x86_64, Linux aarch64, macOS x86_64, macOS aarch64, Windows x86_64
+- ビルド成果物をGitHub Releaseに自動アップロード
+
+## Non-Functional Requirements
+
+### NFR-01: 前提条件
+- Claude Code CLI（`claude`コマンド）がPATHに存在すること
+- Claudeのサブスクリプション（ProまたはMaxプラン）が有効であること
+
+### NFR-02: セキュリティ
+- APIキーをコードにハードコードしない
+- Claude Code CLIの認証機構に依存する（APIキー不要）
+
+### NFR-03: 互換性
+- Rust 1.75以上
+- macOS / Linux / Windows対応（CI/CDバイナリ配布による）
+
+### NFR-04: 出力品質
+- 要約は200文字程度の日本語
+- 読者が「読みたい」と思える内容の核心を捉えた紹介文
+
+### NFR-05: CI/CD
+- GitHub Actions による自動化
+- Cargo.lock をリポジトリに含め再現性を担保
+- キャッシュによりビルド時間を最小化
+
+## Constraints
+
+- Claude Code CLIの利用にはサブスクリプション費用が発生する（無料ではない）
+- Web検索結果の品質はClaudeの判断に依存する
+- オフライン環境では動作しない
+
 ## Out of Scope
 
 - データベースへの書籍情報保存
