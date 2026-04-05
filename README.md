@@ -85,7 +85,7 @@ book-summary-agent 978-4-87311-903-8
 book-summary-agent 9784873119038 --json
 
 # 使用モデルを変更
-book-summary-agent 9784873119038 --model claude-opus-4-20250514
+book-summary-agent 9784873119038 --model claude-opus-4-6
 
 # ヘルプ
 book-summary-agent --help
@@ -100,7 +100,7 @@ book-summary-agent --help
 著者:     Mike Julian／松浦隼人
 出版社:   オライリー・ジャパン
 出版日:   20190117
-情報源:   OpenBD
+表紙URL:  https://images-na.ssl-images-amazon.com/...
 ───────────────────────────────────────────
 【概要】
 システム運用の要である「監視」を体系的に解説した一冊。
@@ -119,7 +119,7 @@ book-summary-agent --help
   "author": "Mike Julian／松浦隼人",
   "publisher": "オライリー・ジャパン",
   "pubdate": "20190117",
-  "cover_url": "https://cover.openbd.jp/...",
+  "cover_url": "https://images-na.ssl-images-amazon.com/...",
   "summary": "システム運用の要である「監視」を体系的に..."
 }
 ```
