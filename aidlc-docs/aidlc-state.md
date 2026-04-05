@@ -8,8 +8,8 @@
 - **Last Updated**: 2026-04-05T00:00:00Z
 
 ## Current Phase
-- **Phase**: Inception (Complete)
-- **Next Phase**: Construction (on-demand)
+- **Phase**: Construction (Complete)
+- **Next Phase**: Operations (Documented)
 
 ## Stage Execution Summary
 
@@ -27,15 +27,15 @@
 ### Construction Phase
 | Stage | Status | Notes |
 |-------|--------|-------|
-| Functional Design | ⏳ Pending | |
-| NFR Requirements | ⏳ Pending | |
-| Code Generation | ⏳ Pending | |
-| Build and Test | ⏳ Pending | |
+| Functional Design | ✅ Complete | business-logic-model, business-rules, domain-entities |
+| NFR Requirements | ✅ Complete | nfr-requirements, tech-stack-decisions |
+| Code Generation | ✅ Complete | code-summary, code-generation-plan |
+| Build and Test | ✅ Complete | build/unit/integration/summary docs |
 
 ### Operations Phase
 | Stage | Status | Notes |
 |-------|--------|-------|
-| Operations | ⏳ Placeholder | Future expansion |
+| Operations | ✅ Complete | ローカルCLIツール向け運用手順 |
 
 ## Extension Configuration
 | Extension | Enabled | Notes |
@@ -45,4 +45,4 @@
 ## Units of Work
 | Unit | Description | Status |
 |------|-------------|--------|
-| book-summary-agent | ISBNから書籍概要を生成するRust CLI | Inception Complete |
+| book-summary-agent | ISBNから書籍概要を生成するRust CLI | Construction Complete |
