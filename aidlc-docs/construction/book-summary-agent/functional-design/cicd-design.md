@@ -57,9 +57,9 @@ release.yml:
 book-summary-agent-{tag}-{target}.{tar.gz|zip}
 
 例:
-  book-summary-agent-v0.1.0-x86_64-unknown-linux-gnu.tar.gz
-  book-summary-agent-v0.1.0-aarch64-apple-darwin.zip
-  book-summary-agent-v0.1.0-x86_64-pc-windows-msvc.zip
+  book-summary-agent-v0.1.1-x86_64-unknown-linux-gnu.tar.gz
+  book-summary-agent-v0.1.1-aarch64-apple-darwin.zip
+  book-summary-agent-v0.1.1-x86_64-pc-windows-msvc.zip
 ```
 
 ## 参考実装
