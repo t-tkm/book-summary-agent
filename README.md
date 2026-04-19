@@ -1,6 +1,7 @@
 # book-summary-agent
 
 ISBNから書籍の概要を200文字程度で生成するRust製CLIエージェント。
+利用する LLM CLI は切り替え可能で、デフォルトは `Codex CLI` です。
 
 ## アーキテクチャ
 
@@ -9,7 +10,7 @@ ISBN入力
   │
   ▼
 ┌─────────────────────────────┐
-│ Claude エージェント          │
+│ LLM CLI エージェント         │
 │  1. ISBNでWeb検索            │
 │  2. 書籍情報を収集           │
 │  3. 200文字要約を生成        │
@@ -34,29 +35,16 @@ asdf install rust latest
 asdf set -u rust latest
 ```
 
-#### 2. Claude Code CLI
+#### 2. 利用したい LLM CLI
 
-概要生成に `claude` コマンドを使用します。利用には **Claudeのサブスクリプション（ProまたはMaxプラン）** が必要です。
+デフォルトは `codex` コマンドを使います。必要に応じて `--provider` で切り替えてください。
 
-1. [claude.ai](https://claude.ai) でProまたはMaxプランに登録
-2. Claude Code CLIをインストール:
+- Codex CLI: `codex`
+- Gemini CLI: `gemini`
+- Kiro CLI: `kiro-cli`
+- GitHub Copilot CLI: `copilot`
 
-```bash
-npm install -g @anthropic-ai/claude-code
-```
-
-3. 認証を完了させる:
-
-```bash
-claude
-# ブラウザが開き、ログイン・認証が完了する
-```
-
-4. 動作確認:
-
-```bash
-claude -p "hello"
-```
+各 CLI のインストールと認証は、それぞれの公式手順に従って事前に完了させてください。
 
 ### ビルド
 
@@ -68,6 +56,24 @@ cargo build --release
 
 ## 使い方
 
+### `cargo run` で試す
+
+ビルド済みバイナリを作らずに、そのまま動作確認できます。
+
+```bash
+# デフォルトの Codex CLI で実行
+cargo run -- 9784873119038
+
+# JSON形式で出力
+cargo run -- 9784873119038 --json
+
+# Gemini CLI を使う
+cargo run -- 9784873119038 --provider gemini
+
+# モデルを指定する
+cargo run -- 9784873119038 --provider codex --model gpt-5.4
+```
+
 ### 基本
 
 ```bash
@@ -76,6 +82,9 @@ book-summary-agent 9784873119038
 
 # ハイフン付きISBNも可
 book-summary-agent 978-4-87311-903-8
+
+# Gemini CLIを使う
+book-summary-agent 9784873119038 --provider gemini
 ```
 
 ### オプション
@@ -84,8 +93,11 @@ book-summary-agent 978-4-87311-903-8
 # JSON形式で出力（パイプライン連携向き）
 book-summary-agent 9784873119038 --json
 
+# 使用するCLIを変更
+book-summary-agent 9784873119038 --provider github-copilot
+
 # 使用モデルを変更
-book-summary-agent 9784873119038 --model claude-opus-4-6
+book-summary-agent 9784873119038 --provider codex --model gpt-5.4
 
 # ヘルプ
 book-summary-agent --help
@@ -127,9 +139,25 @@ book-summary-agent --help
 ## 処理フロー詳細
 
 1. **ISBN正規化** — ハイフン除去、10桁/13桁バリデーション
-2. **Claude エージェント実行** — `WebSearch` / `WebFetch` ツールを使い、ISBNでWeb検索して書籍情報（タイトル・著者・出版社・出版日・表紙URL）を自律的に収集する
+2. **LLM CLI 実行** — 選択した CLI を使い、ISBNでWeb検索して書籍情報（タイトル・著者・出版社・出版日・表紙URL）を自律的に収集する
 3. **概要生成** — 収集した情報をもとに、読者が読みたくなるような200文字程度の日本語要約を生成する
 4. **出力** — テキスト形式 or JSON形式
+
+## 対応プロバイダ
+
+- `codex` (`--provider codex`)
+- `gemini` (`--provider gemini`)
+- `kiro` (`--provider kiro`)
+- `github-copilot` (`--provider github-copilot`)
+
+## 注意点
+
+- `--model` は CLI 側が都度指定に対応している場合のみ使えます。
+- `Codex CLI` はバージョンによって `exec` の対応オプションが異なります。このツールでは互換性のため `codex exec` の基本オプションのみを使っています。
+- `Kiro CLI` はモデルの都度指定に対応していないため、`kiro-cli settings chat.defaultModel <MODEL>` で既定モデルを設定してください。
+- `Kiro CLI` はこのツールから非対話で Web 検索を使うため、内部的に `--trust-all-tools` を付けて実行します。
+- `GitHub Copilot CLI` のコマンド名が環境内の別ツールと衝突する場合は、`BOOK_SUMMARY_AGENT_GITHUB_COPILOT_CMD` 環境変数で実行コマンドを上書きできます。
+- 同様に `BOOK_SUMMARY_AGENT_CODEX_CMD` `BOOK_SUMMARY_AGENT_GEMINI_CMD` `BOOK_SUMMARY_AGENT_KIRO_CMD` でも各 CLI コマンド名を上書きできます。
 
 ## Notion連携（応用例）
 
