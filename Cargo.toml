@@ -1,6 +1,6 @@
 [package]
 name = "book-summary-agent"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "ISBNから書籍の概要を200文字程度で生成するCLIエージェント"
 
