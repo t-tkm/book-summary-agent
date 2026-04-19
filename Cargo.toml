@@ -2,7 +2,7 @@
 name = "book-summary-agent"
 version = "0.1.0"
 edition = "2021"
-description = "ISBNから書籍の概要を200文字程度で生成するCLIエージェント (OpenBD + Claude API)"
+description = "ISBNから書籍の概要を200文字程度で生成するCLIエージェント"
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }
